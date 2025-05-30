@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+@isset(${1:variable})
+    ${2}
+@endisset
+]]></content>
+  <tabTrigger>@isset</tabTrigger>
+  <scope>text.html.php</scope>
+</snippet>

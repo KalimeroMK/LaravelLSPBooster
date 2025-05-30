@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+@foreach (${1:$items} as ${2:$item})
+    ${3}
+@endforeach
+]]></content>
+  <tabTrigger>@foreach</tabTrigger>
+  <scope>text.html.php</scope>
+</snippet>

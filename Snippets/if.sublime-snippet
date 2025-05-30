@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+@if (${1:condition})
+    ${2}
+@endif
+]]></content>
+  <tabTrigger>@if</tabTrigger>
+  <scope>text.html.php</scope>
+</snippet>

@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+@error('${1:field}')
+    <span class="text-red-500 text-xs">${2:$message}</span>
+@enderror
+]]></content>
+  <tabTrigger>@error</tabTrigger>
+  <scope>text.html.php</scope>
+</snippet>

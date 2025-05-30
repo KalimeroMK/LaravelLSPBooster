@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+@if (session('${1:key}'))
+    {{ session('${1:key}') }}
+@endif
+]]></content>
+  <tabTrigger>@session</tabTrigger>
+  <scope>text.html.php</scope>
+</snippet>

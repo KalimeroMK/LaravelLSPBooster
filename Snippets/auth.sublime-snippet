@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+@auth
+    ${1}
+@endauth
+]]></content>
+  <tabTrigger>@auth</tabTrigger>
+  <scope>text.html.php</scope>
+</snippet>
