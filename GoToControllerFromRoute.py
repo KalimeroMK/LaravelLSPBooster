@@ -26,7 +26,7 @@ class GoToControllerFromRouteCommand(sublime_plugin.TextCommand):
         with open(route_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        pattern = re.compile(rf"Route::[a-zA-Z]+\([^\)]*\)->name\(['\"]{re.escape(route_name)}['\"]\)")
+        pattern = re.compile(r"Route::[a-zA-Z]+\([^\)]*\)->name\(['\"]" + re.escape(route_name) + r"['\"]\)")
         match = pattern.search(content)
         if not match:
             sublime.status_message("Named route not found.")

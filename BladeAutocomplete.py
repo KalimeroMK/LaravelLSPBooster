@@ -44,5 +44,5 @@ class LaravelBladeViewCompletions(sublime_plugin.EventListener):
                     full_path = os.path.join(root, file)
                     relative = os.path.relpath(full_path, base_path)
                     view_name = relative.replace(".blade.php", "").replace(os.sep, ".")
-                    views.append((f"{prefix}{view_name}	view", f"{prefix}{view_name}"))
+                    views.append(("{}{}	view".format(prefix, view_name), "{}{}".format(prefix, view_name)))
         return views

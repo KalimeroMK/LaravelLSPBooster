@@ -64,4 +64,4 @@ Trigger in `.blade.php` files:
 
 ## Maintained by
 
-Zoran Bogoevski ✨
+Zoran Bogoevski✨
