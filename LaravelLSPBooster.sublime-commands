@@ -1,0 +1,6 @@
+[
+  {
+    "caption": "Laravel: Setup LSP (Intelephense)",
+    "command": "setup_laravel_lsp"
+  }
+]

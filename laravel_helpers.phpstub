@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\View\View;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\Http\Response;
+
+if (!function_exists('view')) {
+    function view($view = null, $data = [], $mergeData = []): View|ViewFactory {}
+}
+
+if (!function_exists('redirect')) {
+    function redirect($to = null, $status = 302, $headers = [], $secure = null): Redirector|RedirectResponse {}
+}
+
+if (!function_exists('__')) {
+    function __($key = null, $replace = [], $locale = null): string {}
+}
+
+if (!function_exists('route')) {
+    function route(string $name, $parameters = [], bool $absolute = true): string {}
+}
+
+if (!function_exists('back')) {
+    function back(int $status = 302, array $headers = [], $fallback = false): RedirectResponse {}
+}
+
+if (!function_exists('config')) {
+    function config(string|array|null $key = null, $default = null): mixed {}
+}
+
+if (!function_exists('response')) {
+    function response($content = '', int $status = 200, array $headers = []): Response {}
+}
+
+if (!function_exists('abort')) {
+    function abort(int $code, string $message = '', array $headers = []): void {}
+}
+
+if (!function_exists('app')) {
+    function app(string $abstract = null, array $parameters = []): mixed {}
+}
