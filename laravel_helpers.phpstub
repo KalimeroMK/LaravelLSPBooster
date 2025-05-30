@@ -1,44 +1,49 @@
-<?php
+import os
+import sublime
+import sublime_plugin
+import zipfile
 
-use Illuminate\View\View;
-use Illuminate\Contracts\View\Factory as ViewFactory;
-use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
-use Illuminate\Http\Response;
+class LaravelSetupLspCommand(sublime_plugin.ApplicationCommand):
+    def run(self):
+        settings = sublime.load_settings("LSP.sublime-settings")
+        files = settings.get("files", {})
+        associations = files.get("associations", [])
+        if "*.phpstub" not in associations:
+            associations.append("*.phpstub")
+            files["associations"] = associations
+            settings.set("files", files)
 
-if (!function_exists('view')) {
-    function view($view = null, $data = [], $mergeData = []): View|ViewFactory {}
-}
+        clients = settings.get("clients", {})
+        if "intelephense" in clients:
+            client = clients["intelephense"]
+            env = client.get("initializationOptions", {}).get("environment", {})
+            includePaths = env.get("includePaths", [])
+            stub_path = os.path.expanduser("~/.intelephense-stubs")
+            if stub_path not in includePaths:
+                includePaths.append(stub_path)
+                env["includePaths"] = includePaths
+                client["initializationOptions"]["environment"] = env
+                clients["intelephense"] = client
+                settings.set("clients", clients)
 
-if (!function_exists('redirect')) {
-    function redirect($to = null, $status = 302, $headers = [], $secure = null): Redirector|RedirectResponse {}
-}
+        sublime.save_settings("LSP.sublime-settings")
 
-if (!function_exists('__')) {
-    function __($key = null, $replace = [], $locale = null): string {}
-}
+        # Ensure stub file exists
+        stub_path = os.path.expanduser("~/.intelephense-stubs/laravel_helpers.phpstub")
+        if not os.path.exists(os.path.dirname(stub_path)):
+            os.makedirs(os.path.dirname(stub_path))
 
-if (!function_exists('route')) {
-    function route(string $name, $parameters = [], bool $absolute = true): string {}
-}
+        # Extract stub file from .sublime-package
+        plugin_path = os.path.realpath(__file__)
+        zip_root = plugin_path.split('.sublime-package')[0] + '.sublime-package'
 
-if (!function_exists('back')) {
-    function back(int $status = 302, array $headers = [], $fallback = false): RedirectResponse {}
-}
+        if not os.path.exists(stub_path):
+            try:
+                with zipfile.ZipFile(zip_root, 'r') as z:
+                    with z.open('LaravelLSPBooster/laravel_helpers.phpstub') as stub_file:
+                        with open(stub_path, 'wb') as out_file:
+                            out_file.write(stub_file.read())
+            except Exception as e:
+                sublime.error_message("LaravelLSPBooster: Failed to extract stub file: " + str(e))
 
-if (!function_exists('config')) {
-    function config(string|array|null $key = null, $default = null): mixed {}
-}
-
-if (!function_exists('response')) {
-    function response($content = '', int $status = 200, array $headers = []): Response {}
-}
-
-if (!function_exists('abort')) {
-    function abort(int $code, string $message = '', array $headers = []): void {}
-}
-
-if (!function_exists('app')) {
-    function app(string $abstract = null, array $parameters = []): mixed {}
-}
+        sublime.message_dialog("Laravel LSP Booster: Intelephense configured.")
